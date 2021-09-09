@@ -13,7 +13,7 @@ namespace MilSiteAPI.Models
 
 		[Required]
 		public string LocName { get; set; }
-		public int MaxStay { get; set; }
+		public int? MaxStay { get; set; }
 
 		[Required]
 		[Location_NumSpacesGreaterThan0]

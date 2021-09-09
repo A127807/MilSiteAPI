@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MilSiteAPI.Filters;
 using MilSiteAPI.Models;
 using System;
 using System.Collections.Generic;
@@ -28,6 +29,14 @@ namespace MilSiteAPI.Controllers
 		{
 			return Ok(location);
 		}
+
+		//[HttpPost]
+		//[Route("/api/v2/locations")]
+		//[Location_MaxStayMustBeGreaterThanZero]
+		//public IActionResult PostV2([FromBody] Location location)
+		//{
+		//	return Ok(location);
+		//}
 
 		[HttpPut]
 		public IActionResult Put([FromBody] Location location)
