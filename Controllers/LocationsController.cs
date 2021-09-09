@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MilSiteAPI.Filters;
-using MilSiteAPI.Models;
+using MilSiteCore.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
