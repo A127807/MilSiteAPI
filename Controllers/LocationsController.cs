@@ -35,7 +35,6 @@ namespace MilSiteAPI.Controllers
 
 		[HttpPost]
 		[Route("/api/v2/locations")]
-		[Location_MaxStayMustBeGreaterThanZero]
 		public IActionResult PostV2([FromBody] Location location)
 		{
 			return Ok(location);
