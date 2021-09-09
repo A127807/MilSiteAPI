@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MilSiteAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MilSiteAPI.Controllers 
+namespace MilSiteAPI.Controllers
 {
 	[ApiController]
 	[Route("api/v1/[controller]")]
@@ -23,15 +24,15 @@ namespace MilSiteAPI.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult Post()
+		public IActionResult Post([FromBody] Location location)
 		{
-			return Ok("Creating a location");
+			return Ok(location);
 		}
 
-		[HttpPut("{id}")]
-		public IActionResult Put(int id)
+		[HttpPut]
+		public IActionResult Put([FromBody] Location location)
 		{
-			return Ok($"Update Location #{id}.");
+			return Ok(location);
 		}
 
 		[HttpDelete("{id}")]
