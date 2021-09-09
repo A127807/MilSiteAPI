@@ -10,6 +10,9 @@ namespace MilSiteAPI.Controllers
 {
 	[ApiController]
 	[Route("api/v1/[controller]")]
+
+	//The following statement applies this filter to all the action statements in this controller
+	//[Version1DiscontinueResourceFilter]
 	public class LocationsController : ControllerBase
 	{
 		[HttpGet]
@@ -30,13 +33,13 @@ namespace MilSiteAPI.Controllers
 			return Ok(location);
 		}
 
-		//[HttpPost]
-		//[Route("/api/v2/locations")]
-		//[Location_MaxStayMustBeGreaterThanZero]
-		//public IActionResult PostV2([FromBody] Location location)
-		//{
-		//	return Ok(location);
-		//}
+		[HttpPost]
+		[Route("/api/v2/locations")]
+		[Location_MaxStayMustBeGreaterThanZero]
+		public IActionResult PostV2([FromBody] Location location)
+		{
+			return Ok(location);
+		}
 
 		[HttpPut]
 		public IActionResult Put([FromBody] Location location)
