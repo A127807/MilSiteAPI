@@ -23,13 +23,13 @@ namespace MilSiteAPI
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-			//services.AddControllers();
+			services.AddControllers();
 
 			//The following statement adds a filter to all controllers
-			services.AddControllers(options =>
-			{
-				options.Filters.Add<Version1DiscontinueResourceFilter>();
-			});
+			//services.AddControllers(options =>
+			//{
+			//	options.Filters.Add<Version1DiscontinueResourceFilter>();
+			//});
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
