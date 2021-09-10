@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using MilSiteCore.Models;
+using MilSiteDataStore.EF;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,35 +13,69 @@ namespace MilSiteAPI.Controllers
 	[Route("api/v1/[controller]")]
 	public class LocationsTypeController : ControllerBase
 	{
+		private readonly SiteContext _db;
+
+		public LocationsTypeController(SiteContext db)
+		{
+			this._db = db;
+		}
 
 		[HttpGet]
 		public IActionResult Get()
 		{
-			return Ok("Reading all Location Types");
+			return Ok(_db.LocationTypes.ToList());
 		}
 
 		[HttpGet("{id}")]
 		public IActionResult GetById(int id)
 		{
-			return Ok($"Reading a Location Type #{id}.");
+			var locationType = _db.LocationTypes.Find(id);
+			if (locationType == null)
+				return NotFound();
+
+			return Ok(locationType);
 		}
 
 		[HttpPost]
-		public IActionResult Post()
+		public IActionResult Post([FromBody] LocationType locationType)
 		{
-			return Ok("Creating a Location Type");
+			_db.LocationTypes .Add(locationType);
+			_db.SaveChanges();
+
+			return CreatedAtAction(nameof(GetById),
+				new { id = locationType.LocTypeId },
+				locationType
+				);
 		}
 
 		[HttpPut("{id}")]
-		public IActionResult Put(int id)
+		public IActionResult Put(int id, LocationType locationType)
 		{
-			return Ok($"Update a Location Type #{id}.");
+			if (id != locationType.LocTypeId) return BadRequest();
+			_db.Entry(locationType).State = EntityState.Modified;
+			try
+			{
+				_db.SaveChanges();
+			}
+			catch
+			{
+				if (_db.LocationTypes.Find(id) == null)
+					return NotFound();
+			}
+			return NoContent();
 		}
 
 		[HttpDelete("{id}")]
 		public IActionResult Delete(int id)
 		{
-			return Ok($"Deleted Location Type #{id}.");
+			var locationTypes = _db.LocationTypes.Find(id);
+			if (locationTypes == null)
+				return NotFound();
+
+			_db.Remove(locationTypes);
+			_db.SaveChanges();
+
+			return Ok(locationTypes);
 		}
 	}
 }
