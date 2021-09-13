@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace MilSiteAPI.Controllers
 {
 	[ApiController]
-	[Route("api/v1/[controller]")]
+	[Route("api/[controller]")]
 
 	//The following statement applies this filter to all the action statements in this controller
 	//[Version1DiscontinueResourceFilter]

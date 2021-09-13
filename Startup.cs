@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,7 +34,13 @@ namespace MilSiteAPI
 				});
 			}
 			services.AddControllers();
-
+			services.AddApiVersioning(options =>
+			{
+				options.ReportApiVersions = true;
+				options.AssumeDefaultVersionWhenUnspecified = true;
+				options.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
+				options.ApiVersionReader = new HeaderApiVersionReader("X-API-Version");
+			});
 			//The following statement adds a filter to all controllers
 			//services.AddControllers(options =>
 			//{

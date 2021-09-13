@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using MilSiteAPI.Filters.V2;
 using MilSiteCore.Models;
 using MilSiteDataStore.EF;
 using System;
@@ -7,16 +8,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MilSiteAPI.Controllers
+namespace MilSiteAPI.Controllers.V2
 {
-	[ApiVersion("1.0")]
+	[ApiVersion("2.0")]
 	[ApiController]
-	[Route("api/[controller]")]
-	public class LocationsTypeController : ControllerBase
+	[Route("api/v2/[controller]")]
+	public class LocationsTypeV2Controller : ControllerBase
 	{
 		private readonly SiteContext _db;
 
-		public LocationsTypeController(SiteContext db)
+		public LocationsTypeV2Controller(SiteContext db)
 		{
 			this._db = db;
 		}

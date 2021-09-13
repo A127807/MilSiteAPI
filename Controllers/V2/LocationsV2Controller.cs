@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MilSiteAPI.Filters;
+using MilSiteAPI.Filters.V2;
 using MilSiteCore.Models;
 using MilSiteDataStore.EF;
 using System;
@@ -8,19 +9,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MilSiteAPI.Controllers
+namespace MilSiteAPI.Controllers.V2
 {
-	[ApiVersion("1.0")]
+	[ApiVersion("2.0")]
 	[ApiController]
-	[Route("api/[controller]")]
+	[Route("api/locations")]
 
 	//The following statement applies this filter to all the action statements in this controller
 	//[Version1DiscontinueResourceFilter]
-	public class LocationsController : ControllerBase
+	public class LocationsV2Controller : ControllerBase
 	{
 		private readonly SiteContext _db;
 
-		public LocationsController(SiteContext db)
+		public LocationsV2Controller(SiteContext db)
 		{
 			this._db = db;
 		}
@@ -42,6 +43,7 @@ namespace MilSiteAPI.Controllers
 		}
 
 		[HttpPost]
+		[Location_EnsureDescriptionPresentActionFilter]
 		public async Task<IActionResult> Post([FromBody] Location location)
 		{
 			_db.Locations.Add(location);
@@ -53,17 +55,8 @@ namespace MilSiteAPI.Controllers
 				);
 		}
 
-		[HttpPost]
-		[Route("/api/v2/locations")]
-		public async Task<IActionResult> PostV2([FromBody] Location location)
-		{
-			_db.Locations.Add(location);
-			await _db.SaveChangesAsync();
-
-			return Ok(location);
-		}
-
 		[HttpPut("{id}")]
+		[Location_EnsureDescriptionPresentActionFilter]
 		public async Task<IActionResult> Put(int id,  Location location)
 		{
 			if (id != location.LocId) return BadRequest();
