@@ -24,16 +24,16 @@ namespace MilSiteAPI.Controllers
 			this._db = db;
 		}
 		[HttpGet]
-		public IActionResult Get()
+		public async Task<IActionResult> Get()
 		{
 
-			return Ok(_db.Locations.ToList());
+			return Ok(await _db.Locations.ToListAsync());
 		}
 
 		[HttpGet("{id}")]
-		public IActionResult GetById(int id)
+		public async Task<IActionResult> GetById(int id)
 		{
-			var location = _db.Locations.Find(id);
+			var location =  await _db.Locations.FindAsync(id);
 			if (location == null)
 				return NotFound();
 
@@ -41,10 +41,10 @@ namespace MilSiteAPI.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult Post([FromBody] Location location)
+		public async Task<IActionResult> Post([FromBody] Location location)
 		{
 			_db.Locations.Add(location);
-			_db.SaveChanges();
+			await _db.SaveChangesAsync();
 
 			return CreatedAtAction(nameof(GetById),
 				new {id = location.LocId},
@@ -54,40 +54,40 @@ namespace MilSiteAPI.Controllers
 
 		[HttpPost]
 		[Route("/api/v2/locations")]
-		public IActionResult PostV2([FromBody] Location location)
+		public async Task<IActionResult> PostV2([FromBody] Location location)
 		{
 			_db.Locations.Add(location);
-			_db.SaveChanges();
+			await _db.SaveChangesAsync();
 
 			return Ok(location);
 		}
 
 		[HttpPut("{id}")]
-		public IActionResult Put(int id,  Location location)
+		public async Task<IActionResult> Put(int id,  Location location)
 		{
 			if (id != location.LocId) return BadRequest();
 			_db.Entry(location).State = EntityState.Modified;
 			try
 			{
-				_db.SaveChanges();
+				await _db.SaveChangesAsync();
 			}
 			catch
 			{
-				if (_db.Locations.Find(id) == null)
+				if (await _db.Locations.FindAsync(id) == null)
 					return NotFound();
 			}
 			return NoContent();
 		}
 
 		[HttpDelete("{id}")]
-		public IActionResult Delete(int id)
+		public async Task<IActionResult> Delete(int id)
 		{
-			var location = _db.Locations.Find(id);
+			var location = await _db.Locations.FindAsync(id);
 			if (location == null)
 				return NotFound();
 
 			_db.Remove(location);
-			_db.SaveChanges();
+			await _db.SaveChangesAsync();
 
 			return Ok(location);
 		}

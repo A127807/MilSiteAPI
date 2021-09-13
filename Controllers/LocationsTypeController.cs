@@ -21,15 +21,15 @@ namespace MilSiteAPI.Controllers
 		}
 
 		[HttpGet]
-		public IActionResult Get()
+		public async Task<IActionResult> Get()
 		{
-			return Ok(_db.LocationTypes.ToList());
+			return Ok(await _db.LocationTypes.ToListAsync());
 		}
 
 		[HttpGet("{id}")]
-		public IActionResult GetById(int id)
+		public async Task<IActionResult> GetById(int id)
 		{
-			var locationType = _db.LocationTypes.Find(id);
+			var locationType = await _db.LocationTypes.FindAsync(id);
 			if (locationType == null)
 				return NotFound();
 
@@ -37,10 +37,10 @@ namespace MilSiteAPI.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult Post([FromBody] LocationType locationType)
+		public async Task<IActionResult> Post([FromBody] LocationType locationType)
 		{
 			_db.LocationTypes .Add(locationType);
-			_db.SaveChanges();
+			await _db.SaveChangesAsync();
 
 			return CreatedAtAction(nameof(GetById),
 				new { id = locationType.LocTypeId },
@@ -49,31 +49,31 @@ namespace MilSiteAPI.Controllers
 		}
 
 		[HttpPut("{id}")]
-		public IActionResult Put(int id, LocationType locationType)
+		public async Task<IActionResult> Put(int id, LocationType locationType)
 		{
 			if (id != locationType.LocTypeId) return BadRequest();
 			_db.Entry(locationType).State = EntityState.Modified;
 			try
 			{
-				_db.SaveChanges();
+				await _db.SaveChangesAsync();
 			}
 			catch
 			{
-				if (_db.LocationTypes.Find(id) == null)
+				if (await _db.LocationTypes.FindAsync(id) == null)
 					return NotFound();
 			}
 			return NoContent();
 		}
 
 		[HttpDelete("{id}")]
-		public IActionResult Delete(int id)
+		public async Task<IActionResult> Delete(int id)
 		{
-			var locationTypes = _db.LocationTypes.Find(id);
+			var locationTypes = await _db.LocationTypes.FindAsync(id);
 			if (locationTypes == null)
 				return NotFound();
 
 			_db.Remove(locationTypes);
-			_db.SaveChanges();
+			await _db.SaveChangesAsync();
 
 			return Ok(locationTypes);
 		}

@@ -21,16 +21,16 @@ namespace MilSiteAPI.Controllers
 			this._db = db;
 		}
 		[HttpGet]
-		public IActionResult Get()
+		public async Task<IActionResult> Get()
 		{
 
-			return Ok(_db.Amenities.ToList());
+			return Ok(await _db.Amenities.ToListAsync());
 		}
 
 		[HttpGet("{id}")]
-		public IActionResult GetById(int id)
+		public async Task<IActionResult> GetById(int id)
 		{
-			var amenities = _db.Amenities.Find(id);
+			var amenities = await _db.Amenities.FindAsync(id);
 			if (amenities == null)
 				return NotFound();
 
@@ -38,10 +38,10 @@ namespace MilSiteAPI.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult Post([FromBody] Amenitie amentities)
+		public async Task<IActionResult> Post([FromBody] Amenitie amentities)
 		{
 			_db.Amenities.Add(amentities);
-			_db.SaveChanges();
+			await _db.SaveChangesAsync();
 
 			return CreatedAtAction(nameof(GetById),
 				new { id = amentities.AmID },
@@ -51,40 +51,40 @@ namespace MilSiteAPI.Controllers
 
 		[HttpPost]
 		[Route("/api/v2/amenities")]
-		public IActionResult PostV2([FromBody] Amenitie amentities)
+		public async Task<IActionResult> PostV2([FromBody] Amenitie amentities)
 		{
 			_db.Amenities.Add(amentities);
-			_db.SaveChanges();
+			await _db.SaveChangesAsync();
 
 			return Ok(amentities);
 		}
 
 		[HttpPut("{id}")]
-		public IActionResult Put(int id, Amenitie amentities)
+		public async Task<IActionResult> Put(int id, Amenitie amentities)
 		{
 			if (id != amentities.AmID) return BadRequest();
 			_db.Entry(amentities).State = EntityState.Modified;
 			try
 			{
-				_db.SaveChanges();
+				await _db.SaveChangesAsync();
 			}
 			catch
 			{
-				if (_db.Amenities.Find(id) == null)
+				if (await _db.Amenities.FindAsync(id) == null)
 					return NotFound();
 			}
 			return NoContent();
 		}
 
 		[HttpDelete("{id}")]
-		public IActionResult Delete(int id)
+		public async Task<IActionResult> Delete(int id)
 		{
-			var amenities = _db.Amenities.Find(id);
+			var amenities = await _db.Amenities.FindAsync(id);
 			if (amenities == null)
 				return NotFound();
 
 			_db.Remove(amenities);
-			_db.SaveChanges();
+			await _db.SaveChangesAsync();
 
 			return Ok(amenities);
 		}

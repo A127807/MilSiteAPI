@@ -6,39 +6,98 @@ using System.Threading.Tasks;
 
 namespace MilSiteAPI.Controllers
 {
-	[ApiController]
-	[Route("api/v1/[controller]")]
-	public class ImagesController : ControllerBase
+	using Microsoft.AspNetCore.Mvc;
+	using Microsoft.EntityFrameworkCore;
+	using MilSiteCore.Models;
+	using MilSiteDataStore.EF;
+	using System;
+	using System.Collections.Generic;
+	using System.Linq;
+	using System.Threading.Tasks;
+
+	namespace MilSiteAPI.Controllers
 	{
+		[ApiController]
+		[Route("api/v1/[controller]")]
 
-		[HttpGet]
-		public IActionResult Get()
+		//The following statement applies this filter to all the action statements in this controller
+		//[Version1DiscontinueResourceFilter]
+		public class ImagesController : ControllerBase
 		{
-			return Ok("Reading all Locations Images ");
-		}
+			private readonly SiteContext _db;
 
-		[HttpGet("{id}")]
-		public IActionResult GetById(int id)
-		{
-			return Ok($"Reading a Locations Images #{id}.");
-		}
+			public ImagesController(SiteContext db)
+			{
+				this._db = db;
+			}
+			[HttpGet]
+			public async Task<IActionResult> Get()
+			{
 
-		[HttpPost]
-		public IActionResult Post()
-		{
-			return Ok("Creating a Locations Images");
-		}
+				return Ok(await _db.Images.ToListAsync());
+			}
 
-		[HttpPut("{id}")]
-		public IActionResult Put(int id)
-		{
-			return Ok($"Update a Locations Images #{id}.");
-		}
+			[HttpGet("{id}")]
+			public async Task<IActionResult> GetById(int id)
+			{
+				var images = await _db.Images.FindAsync(id);
+				if (images == null)
+					return NotFound();
 
-		[HttpDelete("{id}")]
-		public IActionResult Delete(int id)
-		{
-			return Ok($"Deleted a Locations Images #{id}.");
+				return Ok(images);
+			}
+
+			[HttpPost]
+			public async Task<IActionResult> Post([FromBody] Image image)
+			{
+				_db.Images.Add(image);
+				await _db.SaveChangesAsync();
+
+				return CreatedAtAction(nameof(GetById),
+					new { id = image.ImageId },
+					image
+					);
+			}
+
+			[HttpPost]
+			[Route("/api/v2/locations")]
+			public async Task<IActionResult> PostV2([FromBody] Image image)
+			{
+				_db.Images.Add(image);
+				await _db.SaveChangesAsync();
+
+				return Ok(image);
+			}
+
+			[HttpPut("{id}")]
+			public async Task<IActionResult> Put(int id, Image image)
+			{
+				if (id != image.ImageId) return BadRequest();
+				_db.Entry(image).State = EntityState.Modified;
+				try
+				{
+					await _db.SaveChangesAsync();
+				}
+				catch
+				{
+					if (await _db.Images.FindAsync(id) == null)
+						return NotFound();
+				}
+				return NoContent();
+			}
+
+			[HttpDelete("{id}")]
+			public async Task<IActionResult> Delete(int id)
+			{
+				var image = await _db.Images.FindAsync(id);
+				if (image == null)
+					return NotFound();
+
+				_db.Remove(image);
+				await _db.SaveChangesAsync();
+
+				return Ok(image);
+			}
 		}
 	}
 }

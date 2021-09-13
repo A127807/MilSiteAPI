@@ -40,6 +40,17 @@ namespace MilSiteAPI.Controllers
 			return Ok(space);
 		}
 
+		[HttpGet]
+		[Route("/api/v1/spaces/{sid}/spacephotos")]
+		public IActionResult GetPhotosForSpaces(int sid)
+		{
+			var photos = _db.Images.Where(p => p.SpaceId == sid).ToList();
+			if (photos == null || photos.Count <= 0)
+				return NotFound();
+
+			return Ok(photos);
+		}
+
 		[HttpPost]
 		public IActionResult Post([FromBody] Space space)
 		{
