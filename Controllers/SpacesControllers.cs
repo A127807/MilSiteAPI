@@ -40,16 +40,16 @@ namespace MilSiteAPI.Controllers
 			return Ok(space);
 		}
 
-		[HttpGet]
-		[Route("/api/v1/spaces/{sid}/spacephotos")]
-		public IActionResult GetPhotosForSpaces(int sid)
-		{
-			var photos = _db.Images.Where(p => p.SpaceId == sid).ToList();
-			if (photos == null || photos.Count <= 0)
-				return NotFound();
+		//[HttpGet]
+		//[Route("/api/v1/spaces/{sid}/spacephotos")]
+		//public IActionResult GetPhotosForSpaces(int sid)
+		//{
+		//	var photos = _db.Images.Where(p => p.SpaceId == sid).ToList();
+		//	if (photos == null || photos.Count <= 0)
+		//		return NotFound();
 
-			return Ok(photos);
-		}
+		//	return Ok(photos);
+		//}
 
 		[HttpPost]
 		public IActionResult Post([FromBody] Space space)
@@ -63,15 +63,15 @@ namespace MilSiteAPI.Controllers
 				);
 		}
 
-		[HttpPost]
-		[Route("/api/v2/locations")]
-		public IActionResult PostV2([FromBody] Space space)
-		{
-			_db.Spaces.Add(space);
-			_db.SaveChanges();
+		//[HttpPost]
+		//[Route("/api/v2/locations")]
+		//public IActionResult PostV2([FromBody] Space space)
+		//{
+		//	_db.Spaces.Add(space);
+		//	_db.SaveChanges();
 
-			return Ok(space);
-		}
+		//	return Ok(space);
+		//}
 
 		[HttpPut("{id}")]
 		public IActionResult Put(int id, Space space)

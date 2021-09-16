@@ -53,15 +53,15 @@ namespace MilSiteAPI.Controllers
 				);
 		}
 
-		[HttpPost]
-		[Route("/api/v2/locations")]
-		public async Task<IActionResult> PostV2([FromBody] Location location)
-		{
-			_db.Locations.Add(location);
-			await _db.SaveChangesAsync();
+		//[HttpPost]
+		//[Route("/api/v2/locations")]
+		//public async Task<IActionResult> PostV2([FromBody] Location location)
+		//{
+		//	_db.Locations.Add(location);
+		//	await _db.SaveChangesAsync();
 
-			return Ok(location);
-		}
+		//	return Ok(location);
+		//}
 
 		[HttpPut("{id}")]
 		public async Task<IActionResult> Put(int id,  Location location)

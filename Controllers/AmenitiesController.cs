@@ -49,15 +49,15 @@ namespace MilSiteAPI.Controllers
 				);
 		}
 
-		[HttpPost]
-		[Route("/api/v2/amenities")]
-		public async Task<IActionResult> PostV2([FromBody] Amenitie amentities)
-		{
-			_db.Amenities.Add(amentities);
-			await _db.SaveChangesAsync();
+		//[HttpPost]
+		//[Route("/api/v2/amenities")]
+		//public async Task<IActionResult> PostV2([FromBody] Amenitie amentities)
+		//{
+		//	_db.Amenities.Add(amentities);
+		//	await _db.SaveChangesAsync();
 
-			return Ok(amentities);
-		}
+		//	return Ok(amentities);
+		//}
 
 		[HttpPut("{id}")]
 		public async Task<IActionResult> Put(int id, Amenitie amentities)
