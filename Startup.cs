@@ -32,6 +32,8 @@ namespace MilSiteAPI
 				{
 					options.UseInMemoryDatabase("Site");
 				});
+
+
 			}
 			services.AddControllers();
 			services.AddApiVersioning(options =>
@@ -41,6 +43,10 @@ namespace MilSiteAPI
 				options.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
 				options.ApiVersionReader = new HeaderApiVersionReader("X-API-Version");
 			});
+
+			services.AddVersionedApiExplorer(options => options.GroupNameFormat = "'v'VVV");
+			services.AddSwaggerGen();
+
 			//The following statement adds a filter to all controllers
 			//services.AddControllers(options =>
 			//{
@@ -58,6 +64,13 @@ namespace MilSiteAPI
 				//Create in-memory database for dev environment
 				context.Database.EnsureDeleted();
 				context.Database.EnsureCreated();
+
+				app.UseSwagger();
+				app.UseSwaggerUI(
+					options =>
+					{
+						options.SwaggerEndpoint("/swagger/v1/swagger.json", "WebAPI v1");
+					});
 			}
 			else
 			{
