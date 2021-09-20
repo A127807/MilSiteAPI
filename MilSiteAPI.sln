@@ -9,6 +9,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MilSiteCore", "..\MilSiteCo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MilSiteDataStore.EF", "..\MilSiteDataStore.EF\MilSiteDataStore.EF.csproj", "{EDAF6E74-CECB-4DC5-8813-467EFAB2D367}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App.Repository", "..\App.Repository\App.Repository.csproj", "{D074582E-3DA7-43FC-84A6-00A2CC36332D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App.Testing.Cosole", "..\App.Testing.Cosole\App.Testing.Cosole.csproj", "{84EF96FE-B317-4CBA-B4AB-0718361E59B8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{EDAF6E74-CECB-4DC5-8813-467EFAB2D367}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EDAF6E74-CECB-4DC5-8813-467EFAB2D367}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EDAF6E74-CECB-4DC5-8813-467EFAB2D367}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D074582E-3DA7-43FC-84A6-00A2CC36332D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D074582E-3DA7-43FC-84A6-00A2CC36332D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D074582E-3DA7-43FC-84A6-00A2CC36332D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D074582E-3DA7-43FC-84A6-00A2CC36332D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84EF96FE-B317-4CBA-B4AB-0718361E59B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84EF96FE-B317-4CBA-B4AB-0718361E59B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84EF96FE-B317-4CBA-B4AB-0718361E59B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84EF96FE-B317-4CBA-B4AB-0718361E59B8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

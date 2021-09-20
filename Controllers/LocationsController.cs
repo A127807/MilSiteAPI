@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MilSiteAPI.Filters;
+using MilSiteAPI.QueryFilters;
 using MilSiteCore.Models;
 using MilSiteDataStore.EF;
 using System;
@@ -27,7 +28,6 @@ namespace MilSiteAPI.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Get()
 		{
-
 			return Ok(await _db.Locations.ToListAsync());
 		}
 
